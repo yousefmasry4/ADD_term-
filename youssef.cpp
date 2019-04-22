@@ -1,5 +1,5 @@
 #include <iostream> 
-#include <queue> 
+#include <list> 
 #include <string.h>
 #include <vector>
 #include <cstdlib>
@@ -13,17 +13,13 @@ struct primarytemp
   double process;
   double secondary; 
 };
-struct CompareHeight { 
-    bool operator()(primarytemp const& p1, primarytemp const& p2) 
-    { 
-        // return "true" if "p1" is ordered  
-        // before "p2", for example: 
-        return p1.secondary < p2.secondary; 
-    } 
-}; 
 char fi(int x){
     if(x > 0)
         return '+';    
+}
+bool compare_nocase (primarytemp  first,primarytemp second)
+{
+  return ( first.secondary > second.secondary );
 }
 void getdata(int *a,int *b){
     char input[100];
@@ -79,10 +75,9 @@ void getdata(int *a,int *b){
 int main(){
     char input[100];
     gets(input);
-    priority_queue<char> op;
-    queue<primarytemp> q;
+    list<primarytemp> q;
+    list <primarytemp> temp;
     primarytemp p;
-
     for(int i=0;i<strlen(input);i++){
         int tt,v,zz;
     primarytemp p;
@@ -130,26 +125,40 @@ int main(){
             p.secondary=0;
         }
         i=tt;
-        q.push(p);
+        q.push_front(p);
     }
     int a=0,b=0;
     getdata(&a,&b);
-    int flag=0;
+    int flagz=0;
+    q.sort(compare_nocase);
     while(!q.empty()){
         primarytemp x=q.front();
-        q.pop();
-        if(flag == 0 && b>x.secondary){
-            cout<<fi(a)<<a<<"x^("<<b<<')';
-            flag=1;
+        primarytemp y;
+        q.pop_front();
+        if(flagz == 0 && b>x.secondary){
+            y.process=a;
+            y.secondary=b;
+            temp.push_front(y);
+            flagz=1;
         }
-        if(b == x.secondary && flag==0){
-            flag=1;
+        if(b == x.secondary && flagz==0){
+            flagz=1;
             x.process+=a;
         }
-        cout<<fi(x.process)<<x.process<<"x^("<<x.secondary<<')';
+        temp.push_front(x);
        // break;
     }
-    if(flag == 0){
-        cout<<fi(a)<<a<<"x^("<<b<<')';
+    if(flagz == 0){
+        primarytemp yr;
+        yr.process=a;
+        yr.secondary=b;
+        temp.push_front(yr);
+    }    
+    temp.sort(compare_nocase);
+    while(!temp.empty()){
+        primarytemp x=temp.front();
+        temp.pop_front();
+        cout<<fi(x.process)<<x.process<<"x^("<<x.secondary<<')';
+       // break;
     }
 }
