@@ -3,10 +3,10 @@ Using the stl library in c++, write a program that implements ADD_term function 
 
 #features :
 
-it known the power of number as zero
+it know the power of number as zero
 ex: 5x2+10
 it operate as the power of 10 equal 0
-it known the power of un input number as 1
+it know the power of un input number as 1
 ex 5x then the pow of 5 is 1 and so on 
 
 #i/o
