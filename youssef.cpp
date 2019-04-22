@@ -1,7 +1,6 @@
 #include <iostream> 
 #include <list> 
 #include <string.h>
-#include <vector>
 #include <cstdlib>
 using namespace std; 
 struct primarytemp
