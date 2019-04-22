@@ -71,12 +71,11 @@ void getdata(int *a,int *b){
         i=tt;
     }
 }
-
-int main(){
-    char input[100];
-    gets(input);
-    list<primarytemp> q;
+void addterm(char input[]){
+        list<primarytemp> q;
     list <primarytemp> temp;
+    list <primarytemp> temp2;
+    list <primarytemp> temp3;
     primarytemp p;
     for(int i=0;i<strlen(input);i++){
         int tt,v,zz;
@@ -153,12 +152,49 @@ int main(){
         yr.process=a;
         yr.secondary=b;
         temp.push_front(yr);
-    }    
-    temp.sort(compare_nocase);
+    }  
+    temp.sort(compare_nocase);  
     while(!temp.empty()){
         primarytemp x=temp.front();
         temp.pop_front();
+        if(!temp2.empty()){
+            primarytemp y=temp2.front();
+        //    cout<<"x"<<x.secondary<<"y"<<y.secondary<<endl;
+      //      cout<<"x"<<x.process<<"y"<<y.process<<endl;
+            double newx;
+            if(y.secondary == x.secondary){
+                newx=y.process+x.process;
+                temp2.pop_front();
+                primarytemp z;
+                z.process=newx;
+                double m=y.secondary;
+                z.secondary=m;
+                temp2.push_front(z);
+  //              cout<<newx;
+            }else{
+                temp2.push_front(x);               
+            }
+        }else{
+            temp2.push_front(x);
+    //        puts("S");
+        }
+    }
+    temp2.sort(compare_nocase);
+    while(!temp2.empty()){
+        primarytemp x=temp2.front();
+        temp2.pop_front();
+        temp3.push_front(x);
+    }
+    temp3.sort(compare_nocase);
+    while(!temp3.empty()){
+        primarytemp x=temp3.front();
+        temp3.pop_front();
         cout<<fi(x.process)<<x.process<<"x^("<<x.secondary<<')';
        // break;
     }
+}
+int main(){
+    char input[100];
+    gets(input);
+    addterm(input);
 }
